@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spsphostnamespace
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPHostNamespace
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8spsphostnamespace
+
+        violation[{"msg": msg, "details": {}}] {
+          input.review.kind.kind == "Pod"
+          container := input.review.object.spec
+
+          hostPID := container.hostPID
+          hostIPC := container.hostIPC
+
+          hostPID == true
+          msg := "Pod must not set hostPID to true"
+        }
+
+        violation[{"msg": msg, "details": {}}] {
+          input.review.kind.kind == "Pod"
+          container := input.review.object.spec
+
+          hostIPC := container.hostIPC
+
+          hostIPC == true
+          msg := "Pod must not set hostIPC to true"
+        }
