@@ -9,6 +9,6 @@ This bundle enforces enterprise-specific governance and security policies across
 
 ##  Fetch
 ```bash
-kpt pkg get https://github.com/<your-org>/<your-repo>.git@main gke-enterprise-custom-policy-bundle
-cd gke-enterprise-custom-policy-bundle
+kpt pkg get https://github.com/aadi308/gke-policy-kpt.git gke-policy
+cd gke-policy
 
